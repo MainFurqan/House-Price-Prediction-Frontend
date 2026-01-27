@@ -21,7 +21,7 @@ furnishingstatus = st.number_input("furnishingstatus")
 if st.button("Predict Price"):
     # Send data to backend
     response = requests.post(
-        "https://house-prize-prediction-backend-production.up.railway.app/",
+        "https://house-prize-prediction-backend-production.up.railway.app/predict",
         json={
             "area": area,
             "bedrooms": bedrooms,
