@@ -1,237 +1,253 @@
-# House Price Prediction – Full Stack ML Application
+# 🏠 New Delhi House Price Prediction
 
-This repository represents a **production‑ready, end‑to‑end Machine Learning project** for predicting house prices. It covers the complete lifecycle of a data science application: **Exploratory Data Analysis (EDA), preprocessing, model training & evaluation, serialization, backend API development, frontend UI development, and cloud deployment**.
+**End-to-End Machine Learning Deployment Application**
 
-The application is split into two independent services:
-
-* **Backend** → FastAPI + trained ML model (deployed on Railway)
-* **Frontend** → Streamlit web application (deployed on Streamlit Cloud)
+🔗 **Live Application (Streamlit Frontend)**
+[https://house-prize-prediction-frontend-ni2vyx76kgojvxxv7szyfg.streamlit.app/](https://house-prize-prediction-frontend-ni2vyx76kgojvxxv7szyfg.streamlit.app/)
 
 ---
 
-## 🔗 Live Application
+## 📌 Project Overview
 
-**Frontend (Streamlit UI):**
-[https://house-prize-prediction-frontend-ni2vyx76kgojvxxv7szyfg.streamlit.app/](https://house-prize-prediction-frontend-ni2vyx76kgojvxxv7szyfg.streamlit.app/)
+This repository contains a **production-ready, end-to-end Machine Learning application** for predicting **house prices in New Delhi** using structured housing data.
 
-The frontend communicates with the backend API to fetch predictions in real time.
+The project demonstrates the **complete ML lifecycle**, including:
+
+* Exploratory Data Analysis (EDA)
+* Data preprocessing & feature engineering
+* Model training, evaluation & selection
+* Model serialization
+* Backend API development
+* Frontend UI development
+* Cloud deployment using Docker
+
+The system follows a **clean separation of concerns** with independent backend and frontend services.
 
 ---
 
 ## 🧠 Problem Statement
 
-The goal of this project is to **predict house prices** based on multiple numerical and categorical features using supervised machine learning. Accurate price prediction helps buyers, sellers, and stakeholders make informed decisions.
+House price prediction is challenging due to:
+
+* High feature variability
+* Skewed target distributions
+* Presence of outliers
+* Non-linear relationships between features and price
+
+The goal of this project is to build a **robust regression model** that accurately predicts house prices while handling skewness, outliers, and feature interactions effectively.
 
 ---
 
-## 🗂️ Project Architecture
+## 🗂️ Project Structure
 
 ```
-House-Price-Prediction
+New Delhi Home Price Prediction/
 │
-├── Backend (FastAPI + ML Model)
+├── backend/
 │   ├── model/
-│   │   ├── EDA_to_serialization.ipynb
-│   │   ├── Housing.csv
-│   │   └── house_price_gb_model.pkl
+│   │   ├── EDA_to_Serialization.ipynb
+│   │   ├── housing.csv
+│   │   └── home_price_GD_model.pkl
+│   │
 │   ├── main.py
-│   ├── requirements.txt
-│   └── Dockerfile
+│   ├── Dockerfile
+│   └── requirements.txt
 │
-├── Frontend (Streamlit)
+├── frontend/
 │   ├── streamlit_app.py
-│   ├── requirements.txt
-│   └── Dockerfile
+│   ├── Dockerfile
+│   └── requirements.txt
+│
+└── README.md
 ```
 
-the both repository is include ( House-Price-Prediction-Backend + House-Price-Prediction-Frontend)
+> The backend and frontend are deployed as **separate services**:
+>
+> * Backend → Railway
+> * Frontend → Streamlit Cloud
 
 ---
 
-## 📊 1. Data Exploration & Analysis (EDA)
+## 🔍 Exploratory Data Analysis (EDA)
 
-All data exploration and experimentation is performed in:
-
-```
-model/EDA_to_serialization.ipynb
-```
-
-### Key EDA Steps
-
-* Analyzed **distribution of numerical features**
-* Checked **balance and imbalance** in categorical/discrete features
-* Identified and handled **outliers**
-* Studied **feature–target relationships**
-* Documented all assumptions and decisions inside the notebook
-
-The dataset used is:
+All exploratory analysis and experimentation were performed in:
 
 ```
-model/Housing.csv
+backend/model/EDA_to_Serialization.ipynb
+```
+
+### EDA Highlights
+
+* Analysis of **numerical feature distributions**
+* Balance and imbalance analysis of **categorical variables**
+* Identification of **skewness and extreme values**
+* Outlier detection using statistical techniques and visualizations
+* Univariate and multivariate analysis to study feature–target relationships
+* Clear documentation of assumptions and decisions
+
+The dataset used:
+
+```
+backend/model/housing.csv
 ```
 
 ---
 
-## 🔄 2. Data Preprocessing
+## ⚙️ Data Preprocessing
 
 The preprocessing pipeline includes:
 
-* Encoding **binary categorical features** → `0 / 1`
-* Encoding **ordinal categorical features** into ordered numeric values
-* Ensuring consistent preprocessing for training and inference
-* Separating features and target variable
+* Encoding **categorical features** using appropriate strategies
+* Encoding **ordinal variables** with meaningful numeric order
+* Handling outliers and inconsistencies
+* Feature–target separation
+* Ensuring consistency between training and inference pipelines
 
-**Target Variable:**
+### Target Variable Transformation
 
-```
-price
-```
+* Applied **log transformation** on the target variable (`price`) to:
 
----
-
-## 🤖 3. Model Training & Evaluation
-
-Multiple models were trained and evaluated. The final selected model is:
-
-### ✅ Gradient Boosting Regressor
-
-**Performance on test data:**
-
-* **RMSE:** ~0.25
-* **R² Score:** ~0.66
-
-This model provided the best bias‑variance tradeoff and generalization performance.
+  * Reduce extreme skewness
+  * Stabilize variance
+  * Improve model generalization
 
 ---
 
-## 💾 4. Model Serialization
+## 🤖 Model Training & Selection
 
-After finalizing the model:
+The following tree-based regression models were trained and evaluated:
 
-* The trained model was serialized using `pickle`
+* Decision Tree Regressor
+* Random Forest Regressor
+* Gradient Boosting Regressor
+
+### ✅ Final Model
+
+**Gradient Boosting Regressor** was selected based on superior generalization performance.
+
+### 📊 Model Performance (Test Data)
+
+| Metric | Value    |
+| ------ | -------- |
+| RMSE   | **0.25** |
+| R²     | **0.66** |
+
+---
+
+## 💾 Model Serialization
+
+* The finalized model was serialized using **Pickle**
 * Saved as:
 
 ```
-model/house_price_gb_model.pkl
+backend/model/home_price_GD_model.pkl
 ```
 
-This serialized model is loaded directly by the FastAPI backend for inference.
+This model is directly loaded by the backend API during runtime.
 
 ---
 
-## ⚙️ 5. Backend – FastAPI (Model Serving)
+## 🚀 Backend – FastAPI (Model Serving)
 
 ### Purpose
 
-The backend exposes the trained ML model as a **REST API** for real‑time predictions.
+The backend exposes the trained ML model as a **RESTful API** for real-time predictions.
 
 ### Key File
 
 ```
-main.py
+backend/main.py
 ```
 
 ### Responsibilities
 
-* Load serialized model at startup
-* Accept structured input features via API request
-* Perform prediction using the trained model
-* Return predicted house price as JSON response
+* Load serialized model at application startup
+* Accept structured feature inputs via HTTP requests
+* Perform inference using the trained model
+* Return predictions in JSON format
 
 ### Tech Stack
 
 * FastAPI
 * Uvicorn
-* Scikit‑learn
-* NumPy / Pandas
+* Scikit-learn
+* Pandas & NumPy
 
-### Containerization
+### Containerization & Deployment
 
-The backend is fully containerized using Docker:
-
-```
-Dockerfile
-```
-
-### Deployment
-
+* Fully containerized using **Docker**
 * Deployed on **Railway**
-* Connected directly to the GitHub backend repository
 
 ---
 
-## 🎨 6. Frontend – Streamlit (User Interface)
+## 🎨 Frontend – Streamlit (User Interface)
 
 ### Purpose
 
-Provides a simple, interactive UI for users to:
+Provides an interactive web interface for users to:
 
 * Input house features
-* Send data to backend API
-* Display predicted house price
+* Trigger predictions
+* View predicted house prices in real time
 
 ### Key File
 
 ```
-streamlit_app.py
+frontend/streamlit_app.py
 ```
 
 ### Features
 
-* User‑friendly input fields
-* Real‑time API communication
-* Error handling for invalid inputs
-* Clean and minimal UI
-
-### Tech Stack
-
-* Streamlit
-* Requests
-* Python
+* Clean and intuitive UI
+* Real-time API communication
+* Input validation and error handling
+* Lightweight and responsive design
 
 ### Deployment
 
 * Deployed on **Streamlit Cloud**
-* Connected to GitHub frontend repository
+* Communicates with FastAPI backend over HTTP
 
 ---
 
-## 🔁 7. Frontend–Backend Communication
+## 🔁 Frontend–Backend Workflow
 
-Flow:
-
-1. User enters input features in Streamlit UI
-2. Frontend sends HTTP request to FastAPI endpoint
-3. Backend loads model and generates prediction
+1. User enters housing features in Streamlit UI
+2. Frontend sends request to FastAPI endpoint
+3. Backend performs prediction using serialized model
 4. Prediction returned as JSON
-5. Frontend displays result to user
+5. Frontend displays result to the user
 
 ---
 
-## 🚀 8. End‑to‑End Deployment Summary
+## 🐳 Deployment Architecture
 
-| Component | Platform        |
-| --------- | --------------- |
-| Backend   | Railway         |
-| Frontend  | Streamlit Cloud |
-| Model     | Pickle (.pkl)   |
-| API       | FastAPI         |
+| Component      | Technology         | Platform        |
+| -------------- | ------------------ | --------------- |
+| Model Training | Scikit-learn       | Local           |
+| Backend API    | FastAPI + Docker   | Railway         |
+| Frontend UI    | Streamlit + Docker | Streamlit Cloud |
+
+This **hybrid deployment architecture** ensures modularity, scalability, and clean system design.
 
 ---
 
-## 📌 Key Highlights
+## 🏗️ Tech Stack
 
-* Complete **end‑to‑end ML pipeline**
-* Production‑ready deployment
-* Clear separation of concerns (EDA, model, API, UI)
-* Scalable architecture
-* Real‑time inference
+* Python
+* Pandas, NumPy
+* Scikit-learn
+* FastAPI
+* Streamlit
+* Docker
+* Railway
+* Streamlit Cloud
 
 ---
 
 ## 👤 Author
 
 **Main Furqan**
-Machine Learning Engineer
+Machine Learning & Data Science
 
 ---
