@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-st.title("House Price Prediction App")
+st.title("New Delhi House Price Prediction")
 
 # User inputs
 area = st.number_input("Area (sqft)")
