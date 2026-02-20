@@ -5,16 +5,16 @@ using statistical summaries and visualizations.
 housing attributes and sale prices, informing feature engineering and modeling
 decisions.
  Executed data preprocessing pipeline, including:
- Encoding categorical and ordinal features using appropriate encoding
-strategies.
- Handling outliers and data inconsistencies
- Applying log transformation on the target variable (price) to address extreme
-skewness and stabilize variance
+       Encoding categorical and ordinal features using appropriate encoding
+        strategies.
+       Handling outliers and data inconsistencies
+       Applying log transformation on the target variable (price) to address extreme
+        skewness and stabilize variance
  Trained and evaluated multiple tree-based regression models (Decision Tree, Random
 Forest, Gradient Boosting) and performed comparative model selection.
  Finalized Gradient Boosting Regressor as the best model, achieving:
- RMSE: 0.25
- R² Score: 0.66 on unseen test data
+       RMSE: 0.25
+       R² Score: 0.66 on unseen test data
  Serialized the trained model using Pickle (PKL) for production deployment.
  Developed a RESTful backend API using FastAPI to serve real-time predictions from the
 trained model.
@@ -22,5 +22,5 @@ trained model.
 prediction.
  Implemented Docker-based containerization and deployed the system using a hybrid
 deployment approach:
- Backend deployed on Railway
- Frontend deployed on Streamlit Cloud
+       Backend deployed on Railway
+       Frontend deployed on Streamlit Cloud
